@@ -93,12 +93,21 @@ const roads = [
 
 // Create an array to hold cars
 const cars = [
+    // faster cars (original)
     new Car(100, 75, 2, 0, 'horizontal'), // Car on the first horizontal road
     new Car(200, 225, 2, 0, 'horizontal'), // Car on the second horizontal road
     new Car(300, 375, 2, 0, 'horizontal'), // Car on the third horizontal road
     new Car(175, 100, 2, Math.PI / 2, 'vertical'), // Car on the first vertical road
     new Car(375, 100, 2, Math.PI / 2, 'vertical'), // Car on the second vertical road
-    new Car(575, 100, 2, Math.PI / 2, 'vertical')  // Car on the third vertical road
+    new Car(575, 100, 2, Math.PI / 2, 'vertical'),  // Car on the third vertical road
+
+    // slower cars
+    new Car(100, 75, 1, 0, 'horizontal'), // Car on the first horizontal road
+    new Car(200, 225, 1, 0, 'horizontal'), // Car on the second horizontal road
+    new Car(300, 375, 1, 0, 'horizontal'), // Car on the third horizontal road
+    new Car(175, 100, 1, Math.PI / 2, 'vertical'), // Car on the first vertical road
+    new Car(375, 100, 1, Math.PI / 2, 'vertical'), // Car on the second vertical road
+    new Car(575, 100, 1, Math.PI / 2, 'vertical')  // Car on the third vertical road
 ];
 
 // Create an array to hold traffic lights
