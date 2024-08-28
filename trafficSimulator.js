@@ -22,6 +22,28 @@ class Car {
     }
 }
 
+// Road class definition
+class Road {
+    constructor(x, y, width, height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+
+    draw() {
+        ctx.fillStyle = 'gray';
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+}
+
+// Create an array to hold roads
+const roads = [
+    new Road(50, 50, 700, 100),
+    new Road(50, 200, 700, 100),
+    new Road(50, 350, 700, 100)
+];
+
 // Create an array to hold cars
 const cars = [
     new Car(100, 100, 2, 0),
@@ -34,14 +56,20 @@ function updateCars() {
     cars.forEach(car => car.update());
 }
 
+// Draw roads on the canvas
+function drawRoads() {
+    roads.forEach(road => road.draw());
+}
+
 // Draw cars on the canvas
 function drawCars() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     cars.forEach(car => car.draw());
 }
 
 // Animation loop
 function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawRoads();
     updateCars();
     drawCars();
     requestAnimationFrame(animate);
