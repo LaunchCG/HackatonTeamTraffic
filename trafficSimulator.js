@@ -105,43 +105,69 @@ const roads = [
 
 // Create an array to hold cars
 const cars = [
-    new Car(100, 75, 2, 0, 'horizontal'), // Car on the first horizontal road
-    new Car(200, 225, 2, 0, 'horizontal'), // Car on the second horizontal road
-    new Car(300, 375, 2, 0, 'horizontal'), // Car on the third horizontal road
-    new Car(175, 100, 2, Math.PI / 2, 'vertical'), // Car on the first vertical road
-    new Car(375, 100, 2, Math.PI / 2, 'vertical'), // Car on the second vertical road
-    new Car(575, 100, 2, Math.PI / 2, 'vertical'),  // Car on the third vertical road
-    new Car(400, 75, 2, 0, 'horizontal'), // Additional cars
+    // Horizontal cars
+    new Car(100, 75, 2, 0, 'horizontal'),
+    new Car(200, 75, 2, 0, 'horizontal'),
+    new Car(300, 75, 2, 0, 'horizontal'),
+    new Car(400, 75, 2, 0, 'horizontal'),
+    new Car(500, 75, 2, 0, 'horizontal'),
+    new Car(600, 75, 2, 0, 'horizontal'),
+    new Car(100, 225, 2, 0, 'horizontal'),
+    new Car(200, 225, 2, 0, 'horizontal'),
+    new Car(300, 225, 2, 0, 'horizontal'),
+    new Car(400, 225, 2, 0, 'horizontal'),
     new Car(500, 225, 2, 0, 'horizontal'),
+    new Car(600, 225, 2, 0, 'horizontal'),
+    new Car(100, 375, 2, 0, 'horizontal'),
+    new Car(200, 375, 2, 0, 'horizontal'),
+    new Car(300, 375, 2, 0, 'horizontal'),
+    new Car(400, 375, 2, 0, 'horizontal'),
+    new Car(500, 375, 2, 0, 'horizontal'),
     new Car(600, 375, 2, 0, 'horizontal'),
+    // Vertical cars
+    new Car(175, 100, 2, Math.PI / 2, 'vertical'),
+    new Car(175, 200, 2, Math.PI / 2, 'vertical'),
     new Car(175, 300, 2, Math.PI / 2, 'vertical'),
+    new Car(175, 400, 2, Math.PI / 2, 'vertical'),
+    new Car(175, 500, 2, Math.PI / 2, 'vertical'),
+    new Car(175, 600, 2, Math.PI / 2, 'vertical'),
+    new Car(375, 100, 2, Math.PI / 2, 'vertical'),
+    new Car(375, 200, 2, Math.PI / 2, 'vertical'),
     new Car(375, 300, 2, Math.PI / 2, 'vertical'),
-    new Car(575, 300, 2, Math.PI / 2, 'vertical')
+    new Car(375, 400, 2, Math.PI / 2, 'vertical'),
+    new Car(375, 500, 2, Math.PI / 2, 'vertical'),
+    new Car(375, 600, 2, Math.PI / 2, 'vertical'),
+    new Car(575, 100, 2, Math.PI / 2, 'vertical'),
+    new Car(575, 200, 2, Math.PI / 2, 'vertical'),
+    new Car(575, 300, 2, Math.PI / 2, 'vertical'),
+    new Car(575, 400, 2, Math.PI / 2, 'vertical'),
+    new Car(575, 500, 2, Math.PI / 2, 'vertical'),
+    new Car(575, 600, 2, Math.PI / 2, 'vertical')
 ];
 
 // Create arrays to hold traffic lights
 const horizontalLights = [
-    new TrafficLight(150, 50, 'horizontal'),
-    new TrafficLight(350, 50, 'horizontal'),
-    new TrafficLight(550, 50, 'horizontal'),
-    new TrafficLight(150, 200, 'horizontal'),
-    new TrafficLight(350, 200, 'horizontal'),
-    new TrafficLight(550, 200, 'horizontal'),
-    new TrafficLight(150, 350, 'horizontal'),
-    new TrafficLight(350, 350, 'horizontal'),
-    new TrafficLight(550, 350, 'horizontal')
+    new TrafficLight(140, 40, 'horizontal'), // Top-left corner of the intersection
+    new TrafficLight(340, 40, 'horizontal'),
+    new TrafficLight(540, 40, 'horizontal'),
+    new TrafficLight(140, 190, 'horizontal'),
+    new TrafficLight(340, 190, 'horizontal'),
+    new TrafficLight(540, 190, 'horizontal'),
+    new TrafficLight(140, 340, 'horizontal'),
+    new TrafficLight(340, 340, 'horizontal'),
+    new TrafficLight(540, 340, 'horizontal')
 ];
 
 const verticalLights = [
-    new TrafficLight(150, 50, 'vertical'),
-    new TrafficLight(350, 50, 'vertical'),
-    new TrafficLight(550, 50, 'vertical'),
-    new TrafficLight(150, 200, 'vertical'),
-    new TrafficLight(350, 200, 'vertical'),
-    new TrafficLight(550, 200, 'vertical'),
-    new TrafficLight(150, 350, 'vertical'),
-    new TrafficLight(350, 350, 'vertical'),
-    new TrafficLight(550, 350, 'vertical')
+    new TrafficLight(160, 70, 'vertical'), // Bottom-right corner of the intersection
+    new TrafficLight(360, 70, 'vertical'),
+    new TrafficLight(560, 70, 'vertical'),
+    new TrafficLight(160, 220, 'vertical'),
+    new TrafficLight(360, 220, 'vertical'),
+    new TrafficLight(560, 220, 'vertical'),
+    new TrafficLight(160, 370, 'vertical'),
+    new TrafficLight(360, 370, 'vertical'),
+    new TrafficLight(560, 370, 'vertical')
 ];
 
 // Update car positions
