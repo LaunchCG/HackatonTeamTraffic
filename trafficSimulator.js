@@ -39,9 +39,14 @@ class Road {
 
 // Create an array to hold roads
 const roads = [
-    new Road(50, 50, 700, 100),
-    new Road(50, 200, 700, 100),
-    new Road(50, 350, 700, 100)
+    // Horizontal roads
+    new Road(50, 50, 700, 50),
+    new Road(50, 200, 700, 50),
+    new Road(50, 350, 700, 50),
+    // Vertical roads
+    new Road(150, 0, 50, 600),
+    new Road(350, 0, 50, 600),
+    new Road(550, 0, 50, 600)
 ];
 
 // Create an array to hold cars
