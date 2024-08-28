@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LA Traffic Simulator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+</head>
+<body>
+    <script>
+        // Initialize Three.js scene
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Add lighting
+        const ambientLight = new THREE.AmbientLight(0x404040); // soft white light
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(5, 10, 7.5).normalize();
+        scene.add(directionalLight);
+
+        // Load the 3D model
+        const loader = new THREE.GLTFLoader();
+        loader.load('path_to_your_downloaded_model/scene.gltf', function (gltf) {
+            const model = gltf.scene;
+            model.scale.set(0.1, 0.1, 0.1); // Adjust the scale as needed
+            scene.add(model);
+        }, undefined, function (error) {
+            console.error(error);
+        });
+
+        // Add road
+        const roadGeometry = new THREE.PlaneGeometry(20, 100);
+        const roadMaterial = new THREE.MeshLambertMaterial({ color: 0x333333 });
+        const road = new THREE.Mesh(roadGeometry, roadMaterial);
+        road.rotation.x = -Math.PI / 2;
+        scene.add(road);
+
+        // Add multiple cars
+        const cars = [];
+        for (let i = 0; i < 10; i++) {
+            const carGeometry = new THREE.BoxGeometry(1, 0.5, 2);
+            const carMaterial = new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff });
+            const car = new THREE.Mesh(carGeometry, carMaterial);
+            car.position.set(Math.random() * 10 - 5, 0.25, Math.random() * 50 - 25);
+            cars.push(car);
+            scene.add(car);
+        }
+
+        // Set camera position
+        camera.position.z = 20;
+        camera.position.y = 10;
+        camera.lookAt(road.position);
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            cars.forEach(car => {
+                car.position.z += 0.1;
+                if (car.position.z > 50) car.position.z = -50;
+            });
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // p5.js setup for interactivity
+        function setup() {
+            createCanvas(window.innerWidth, window.innerHeight);
+        }
+
+        function draw() {
+            // Update car positions based on key presses
+            if (keyIsDown(LEFT_ARROW)) {
+                cars.forEach(car => car.position.x -= 0.1);
+            }
+            if (keyIsDown(RIGHT_ARROW)) {
+                cars.forEach(car => car.position.x += 0.1);
+            }
+            if (keyIsDown(UP_ARROW)) {
+                cars.forEach(car => car.position.z -= 0.1);
+            }
+            if (keyIsDown(DOWN_ARROW)) {
+                cars.forEach(car => car.position.z += 0.1);
+            }
+        }
+
+        // GUI controls
+        const gui = new dat.GUI();
+        gui.add({ simulateAccident }, 'simulateAccident').name('Simulate Accident');
+        gui.add({ simulateMeteorLanding }, 'simulateMeteorLanding').name('Simulate Meteor Landing');
+        gui.add({ simulateHighSpeedChase }, 'simulateHighSpeedChase').name('Simulate High-Speed Chase');
+
+        // Function to simulate a traffic accident
+        function simulateAccident() {
+            cars[0].material.color.set(0x0000ff); // Change car color to blue to indicate an accident
+        }
+
+        // Function to simulate a meteor landing
+        function simulateMeteorLanding() {
+            const meteorGeometry = new THREE.SphereGeometry(1, 32, 32);
+            const meteorMaterial = new THREE.MeshBasicMaterial({ color: 0xaaaaaa });
+            const meteor = new THREE.Mesh(meteorGeometry, meteorMaterial);
+            meteor.position.set(cars[0].position.x, 10, cars[0].position.z);
+            scene.add(meteor);
+
+            // Animate meteor falling
+            const fallInterval = setInterval(() => {
+                meteor.position.y -= 0.1;
+                if (meteor.position.y <= 0.5) {
+                    clearInterval(fallInterval);
+                    meteor.position.y = 0.5;
+                }
+            }, 10);
+        }
+
+        // Function to simulate a high-speed chase
+        function simulateHighSpeedChase() {
+            const policeCarGeometry = new THREE.BoxGeometry(1, 0.5, 2);
+            const policeCarMaterial = new THREE.MeshLambertMaterial({ color: 0x0000ff });
+            const policeCar = new THREE.Mesh(policeCarGeometry, policeCarMaterial);
+            policeCar.position.set(cars[0].position.x - 5, 0.25, cars[0].position.z);
+            scene.add(policeCar);
+
+            // Animate police car chasing
+            const chaseInterval = setInterval(() => {
+                policeCar.position.x += 0.05;
+                if (policeCar.position.x >= cars[0].position.x) {
+                    clearInterval(chaseInterval);
+                }
+            }, 10);
+        }
+    </script>
+</body>
+</html>
