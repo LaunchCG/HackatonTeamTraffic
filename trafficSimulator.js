@@ -12,9 +12,10 @@ class Car {
         this.lane = lane;
     }
 
-    update(trafficLights, cars) {
+    update(horizontalLights, verticalLights, cars) {
         // Check for traffic lights
-        for (let light of trafficLights) {
+        const lights = this.lane === 'horizontal' ? horizontalLights : verticalLights;
+        for (let light of lights) {
             if (this.lane === 'horizontal' && light.y - 10 < this.y && this.y < light.y + 60 && light.state === 'red') {
                 if (this.x + 20 > light.x && this.x < light.x + 20) {
                     return; // Stop the car if the light is red
@@ -64,10 +65,11 @@ class Road {
 
 // TrafficLight class definition
 class TrafficLight {
-    constructor(x, y) {
+    constructor(x, y, orientation) {
         this.x = x;
         this.y = y;
-        this.state = 'red'; // Initial state
+        this.orientation = orientation;
+        this.state = orientation === 'horizontal' ? 'green' : 'red'; // Initial state
         this.timer = 0;
     }
 
@@ -78,8 +80,6 @@ class TrafficLight {
             if (this.state === 'red') {
                 this.state = 'green';
             } else if (this.state === 'green') {
-                this.state = 'yellow';
-            } else if (this.state === 'yellow') {
                 this.state = 'red';
             }
         }
@@ -119,27 +119,40 @@ const cars = [
     new Car(575, 300, 2, Math.PI / 2, 'vertical')
 ];
 
-// Create an array to hold traffic lights
-const trafficLights = [
-    new TrafficLight(150, 50),
-    new TrafficLight(350, 50),
-    new TrafficLight(550, 50),
-    new TrafficLight(150, 200),
-    new TrafficLight(350, 200),
-    new TrafficLight(550, 200),
-    new TrafficLight(150, 350),
-    new TrafficLight(350, 350),
-    new TrafficLight(550, 350)
+// Create arrays to hold traffic lights
+const horizontalLights = [
+    new TrafficLight(150, 50, 'horizontal'),
+    new TrafficLight(350, 50, 'horizontal'),
+    new TrafficLight(550, 50, 'horizontal'),
+    new TrafficLight(150, 200, 'horizontal'),
+    new TrafficLight(350, 200, 'horizontal'),
+    new TrafficLight(550, 200, 'horizontal'),
+    new TrafficLight(150, 350, 'horizontal'),
+    new TrafficLight(350, 350, 'horizontal'),
+    new TrafficLight(550, 350, 'horizontal')
+];
+
+const verticalLights = [
+    new TrafficLight(150, 50, 'vertical'),
+    new TrafficLight(350, 50, 'vertical'),
+    new TrafficLight(550, 50, 'vertical'),
+    new TrafficLight(150, 200, 'vertical'),
+    new TrafficLight(350, 200, 'vertical'),
+    new TrafficLight(550, 200, 'vertical'),
+    new TrafficLight(150, 350, 'vertical'),
+    new TrafficLight(350, 350, 'vertical'),
+    new TrafficLight(550, 350, 'vertical')
 ];
 
 // Update car positions
 function updateCars() {
-    cars.forEach(car => car.update(trafficLights, cars));
+    cars.forEach(car => car.update(horizontalLights, verticalLights, cars));
 }
 
 // Update traffic lights
 function updateTrafficLights() {
-    trafficLights.forEach(light => light.update());
+    horizontalLights.forEach(light => light.update());
+    verticalLights.forEach(light => light.update());
 }
 
 // Draw roads on the canvas
@@ -154,7 +167,8 @@ function drawCars() {
 
 // Draw traffic lights on the canvas
 function drawTrafficLights() {
-    trafficLights.forEach(light => light.draw());
+    horizontalLights.forEach(light => light.draw());
+    verticalLights.forEach(light => light.draw());
 }
 
 // Animation loop
