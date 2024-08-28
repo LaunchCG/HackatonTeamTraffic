@@ -16,13 +16,17 @@ class Car {
         // Check for traffic lights
         const lights = this.lane === 'horizontal' ? horizontalLights : verticalLights;
         for (let light of lights) {
-            if (this.lane === 'horizontal' && light.y - 10 < this.y && this.y < light.y + 60 && light.state === 'red') {
+            if (this.lane === 'horizontal' && light.y - 10 < this.y && this.y < light.y + 60) {
                 if (this.x + 20 > light.x && this.x < light.x + 20) {
-                    return; // Stop the car if the light is red
+                    if (light.state === 'red') {
+                        return; // Stop the car if the light is red
+                    }
                 }
-            } else if (this.lane === 'vertical' && light.x - 10 < this.x && this.x < light.x + 60 && light.state === 'red') {
+            } else if (this.lane === 'vertical' && light.x - 10 < this.x && this.x < light.x + 60) {
                 if (this.y + 10 > light.y && this.y < light.y + 20) {
-                    return; // Stop the car if the light is red
+                    if (light.state === 'red') {
+                        return; // Stop the car if the light is red
+                    }
                 }
             }
         }
