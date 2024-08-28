@@ -4,11 +4,12 @@ const ctx = canvas.getContext('2d');
 
 // Car class definition
 class Car {
-    constructor(x, y, speed, direction) {
+    constructor(x, y, speed, direction, lane) {
         this.x = x;
         this.y = y;
         this.speed = speed;
         this.direction = direction;
+        this.lane = lane;
     }
 
     update() {
@@ -51,14 +52,25 @@ const roads = [
 
 // Create an array to hold cars
 const cars = [
-    new Car(100, 100, 2, 0),
-    new Car(200, 200, 2, Math.PI / 4),
-    new Car(300, 300, 2, Math.PI / 2)
+    new Car(100, 75, 2, 0, 'horizontal'), // Car on the first horizontal road
+    new Car(200, 225, 2, 0, 'horizontal'), // Car on the second horizontal road
+    new Car(300, 375, 2, 0, 'horizontal'), // Car on the third horizontal road
+    new Car(175, 100, 2, Math.PI / 2, 'vertical'), // Car on the first vertical road
+    new Car(375, 100, 2, Math.PI / 2, 'vertical'), // Car on the second vertical road
+    new Car(575, 100, 2, Math.PI / 2, 'vertical')  // Car on the third vertical road
 ];
 
 // Update car positions
 function updateCars() {
-    cars.forEach(car => car.update());
+    cars.forEach(car => {
+        car.update();
+        // Ensure cars stay within the lanes
+        if (car.lane === 'horizontal') {
+            if (car.x > canvas.width) car.x = 0; // Wrap around horizontally
+        } else if (car.lane === 'vertical') {
+            if (car.y > canvas.height) car.y = 0; // Wrap around vertically
+        }
+    });
 }
 
 // Draw roads on the canvas
