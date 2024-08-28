@@ -10,6 +10,7 @@ class Car {
         this.speed = speed;
         this.direction = direction;
         this.lane = lane;
+        this.stopped = false;
     }
 
     update(horizontalLights, verticalLights, cars) {
@@ -19,25 +20,33 @@ class Car {
             if (this.lane === 'horizontal' && light.y - 10 < this.y && this.y < light.y + 60) {
                 if (this.x + 20 > light.x && this.x < light.x + 20) {
                     if (light.state === 'red') {
+                        this.stopped = true;
                         return; // Stop the car if the light is red
+                    } else {
+                        this.stopped = false;
                     }
                 }
             } else if (this.lane === 'vertical' && light.x - 10 < this.x && this.x < light.x + 60) {
                 if (this.y + 10 > light.y && this.y < light.y + 20) {
                     if (light.state === 'red') {
+                        this.stopped = true;
                         return; // Stop the car if the light is red
+                    } else {
+                        this.stopped = false;
                     }
                 }
             }
         }
 
-        // Check for collisions
+        // Check for collisions with other cars
         for (let otherCar of cars) {
             if (otherCar !== this && this.isCollidingWith(otherCar)) {
+                this.stopped = true;
                 return; // Stop the car if a collision is detected
             }
         }
 
+        this.stopped = false;
         this.x += this.speed * Math.cos(this.direction);
         this.y += this.speed * Math.sin(this.direction);
     }
